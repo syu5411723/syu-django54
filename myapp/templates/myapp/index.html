@@ -1,0 +1,61 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+
+    <div class="jumbotron jumbotron-fluid" xmlns="http://www.w3.org/1999/html">
+      <div class="container">
+        <h2 class="display-4">{{ request.site.siteconfig.top_title }}</h2>
+        <p class="lead">{{ request.site.siteconfig.top_subtitle }}</p>
+      </div>
+    </div>
+
+
+ <!-- Card deck -->
+<div class="row">
+
+        <div class="card-deck">
+
+            {% for item in post_list %}
+            <div class="col-md-4">
+              <div class="card mb-4">
+
+                <!--Card image-->
+                <div class="view overlay">
+                    {% if item.thumbnail %}
+                        <img class="card-img-top" src="{{ item.thumbnail.url }}"
+                    alt="{{ item.title }}">
+                    {% else %}
+
+                  <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
+                    alt="{{ item.title }}">
+                    {% endif %}
+                  <a href="{% url 'myapp:post_detail'  item.id %}">
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
+
+                <!--Card content-->
+                <div class="card-body">
+
+                  <!--Title-->
+                  <h4 class="card-title">{{ item.title }}  <small>{{ item.author }}</small></h4>
+                  <p>{{ item.category }}</p>
+                  <!--Text-->
+                  <p class="card-text">{{ item.content |safe|truncatechars_html:10}}</p>
+
+                    <a href="{% url 'myapp:post_detail'  item.id %}"  class="btn btn-primary btn-md"; >もっと読む</a>
+
+                </div>
+
+              </div>
+            </div>
+
+        {% endfor %}
+
+        </div>
+
+</div>
+
+
+{% endblock %}
